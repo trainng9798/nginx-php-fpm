@@ -1,0 +1,22 @@
+version: '3.5'
+services:
+  nginx:
+   image:nginx:latest
+   container_name: nginx
+   volumes:
+      - ./src:/var/www/html
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    networks:
+      - npfpm
+  php-fpm:
+   build: ./php_fpm
+   container_name: php_fpm
+   volumes:
+      - ./src:/var/www/html
+   networks:
+      - npfpm
+networks:
+  npfpm:
+    driver: bridge
